@@ -9,5 +9,5 @@ module "my_ec2" {
 module "my_security_groups" {
   source        = "./modules/sec-group"
   node_admin_ip = module.my_ec2.ec2_instance_ip
-  nodes_ips     = formatlist("%s/32", "${module.my_ec2.ec2_instances_ip}") #Add /32 to Ips to use in cidr blocks
+  nodes_ips     = local.nodes_ip_formatted #Add /32 to Ips to use in cidr blocks
 }
