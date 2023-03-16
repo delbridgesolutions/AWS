@@ -62,7 +62,9 @@ variable "public_hosted_zone_id" {
   default = "Z02514532CALQVL26P6JD"
 }
 
-
+variable "host_type" {
+}
+  
 
 #Instance values
 variable "volumes" {

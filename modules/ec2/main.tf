@@ -15,12 +15,7 @@ resource "aws_instance" "ec2_instance" {
     volume_type = "gp3"
   }
 
-  tags = merge(
-    {
-      Name    = var.instance_name,
-      Project = var.project_name
-    },
-  )
+  tags = { Name = var.instance_name, Project = var.project_name, Type = var.host_type }
 }
 
 #Route 53 Records
@@ -29,7 +24,7 @@ resource "aws_route53_record" "www" {
   name    = var.instance_name
   type    = "A"
   ttl     = 300
-  records = [aws_instance.ec2_instance.private_ip,aws_instance.ec2_instance.public_ip]
+  records = [aws_instance.ec2_instance.private_ip, aws_instance.ec2_instance.public_ip]
 }
 
 
