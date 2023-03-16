@@ -16,7 +16,7 @@ module "project-host" {
   vpc_security_group_ids  = module.project-security_group.sg_id //REMEMBER OUTPUT CALL
   public_hosted_zone_id   = var.public_hosted_zone_id
   ebs_size                = 20
-  volumes                 = var.volumes
-  availability_zone_names = local.az_list
   host_type               = var.host_type
+  availability_zone_names = local.az_list
+  intance_volumes                 = var.intance_volumes
 }

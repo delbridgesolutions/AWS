@@ -14,7 +14,8 @@ variable "subnet_id" {
 variable "project_name" {
 }
 
-variable "volumes" {}
+variable "intance_volumes" {
+}
 
 
 variable "instance_name" {
@@ -35,7 +36,7 @@ variable "host_type" {
   type = string
   description = "Type of ec2 instance"
   validation {
-    condition = contains(["MongoDB", "OpsManager", "OpsManager1"], var.host_type)
+    condition = contains(["MongoDB", "OpsManager", "OpsBackup"], var.host_type)
     error_message = "Valid value is one of the following: MongoDB, OpsManager,OpsManager1."
   }
 }

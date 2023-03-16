@@ -30,7 +30,7 @@ resource "aws_route53_record" "www" {
 
 # VOLUMES attachments
 resource "aws_ebs_volume" "ebs_volumes" {
-  for_each          = { for v in var.volumes : v.name => v }
+  for_each          = { for v in var.intance_volumes[var.host_type] : v.name => v }
   availability_zone = data.aws_subnet.current_subnet.availability_zone
   size              = each.value.size
   type              = "gp3"
@@ -40,7 +40,7 @@ resource "aws_ebs_volume" "ebs_volumes" {
 }
 
 resource "aws_volume_attachment" "volume_attachments" {
-  for_each = { for v in var.volumes : v.name => v }
+  for_each = { for v in var.intance_volumes[var.host_type] : v.name => v }
 
   device_name                    = each.value.device_name
   instance_id                    = aws_instance.ec2_instance.id

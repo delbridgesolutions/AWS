@@ -56,7 +56,6 @@ variable "vpc_id" {
   default = "vpc-07313ad32c2c1fb07"
 }
 
-
 variable "public_hosted_zone_id" {
   type    = string
   default = "Z02514532CALQVL26P6JD"
@@ -64,25 +63,24 @@ variable "public_hosted_zone_id" {
 
 variable "host_type" {
 }
-  
 
-#Instance values
-variable "volumes" {
-  default = [
-    {
-      name        = "appdb-volume",
-      device_name = "/dev/sdf",
-      size        = 250
-    },
-    {
-      name        = "metadata-volume",
-      device_name = "/dev/sdg",
-      size        = 15
-    },
-    {
-      name        = "backup-volume",
-      device_name = "/dev/sdh",
-      size        = 100
-    }
-  ]
-} 
+#Intance volumes  values
+variable "intance_volumes" {
+  type = object({
+    OmBackup = list(object({
+      name        = string
+      device_name = string
+      size        = number
+    })),
+    MongoDB = list(object({
+      name        = string
+      device_name = string
+      size        = number
+    })),
+    OpsManager = list(object({
+      name        = string
+      device_name = string
+      size        = number
+    }))
+  })
+}
