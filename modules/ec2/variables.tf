@@ -36,9 +36,15 @@ variable "host_type" {
   type = string
   description = "Type of ec2 instance"
   validation {
-    condition = contains(["MongoDB", "OpsManager", "OpsBackup"], var.host_type)
-    error_message = "Valid value is one of the following: MongoDB, OpsManager,OpsManager1."
+    condition = contains(["MongoDB", "OpsManager", "OmBackup"], var.host_type)
+    error_message = "Valid value is one of the following: MongoDB, OpsManager,OmBackup."
   }
 }
 
 
+variable "PATH_TO_PUBLIC_KEY" {
+
+}
+variable "PATH_TO_FILES" {
+  
+}
