@@ -10,10 +10,6 @@ variable "local_ip" {
 variable "project_name" {
   default = "dbdevops.net-0"
 }
-variable "aws_profile" {
-  description = "AWS credentials"
-  default     = "default"
-}
 
 variable "aws_region" {
   description = "AWS region"
@@ -32,15 +28,19 @@ variable "root_domain_name" {
 
 variable "key_name" {
   description = "SSH Key-Pair Name"
-  default     = "fchaconn"
-}
+  }
 
 variable "PATH_TO_PUBLIC_KEY" {
-  default = "fchaconn.pem"
+  description = "PATH to access .pem file"
 }
 
+variable "PATH_TO_FILES" {
+  description = "PATH to access Files folder"
+}
+
+
 variable "hostname" {
-  default = "fchacon_dev"
+  default = "dev_instance"
 }
 
 variable "subnet_id" {
@@ -62,6 +62,7 @@ variable "public_hosted_zone_id" {
 }
 
 variable "host_type" {
+  description = "Type of the host going to be"
 }
 
 #Intance volumes  values

@@ -6,9 +6,9 @@ locals {
 # Calling ec2 Module
 module "project-host" {
 
-  source                  = "./ec2"
+  source                  = "./modules/ec2"
   project_name            = var.project_name
-  instance_name           = var.hostname
+  instance_name           = "${var.hostname}-${var.host_type}"
   ami                     = var.ami
   instance_type           = var.instance_type
   key_name                = var.key_name
@@ -18,5 +18,7 @@ module "project-host" {
   ebs_size                = 20
   host_type               = var.host_type
   availability_zone_names = local.az_list
-  intance_volumes                 = var.intance_volumes
+  intance_volumes         = var.intance_volumes
+  PATH_TO_PUBLIC_KEY      = var.PATH_TO_PUBLIC_KEY
+  PATH_TO_FILES           = var.PATH_TO_FILES
 }
