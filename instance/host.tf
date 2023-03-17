@@ -19,6 +19,11 @@ module "project-host" {
   host_type               = var.host_type
   availability_zone_names = local.az_list
   intance_volumes         = var.intance_volumes
-  PATH_TO_PUBLIC_KEY      = var.PATH_TO_PUBLIC_KEY
-  PATH_TO_FILES           = var.PATH_TO_FILES
+}
+
+module "exec-scripts" {
+  source             = "./modules/exec"
+  PATH_TO_PUBLIC_KEY = var.PATH_TO_PUBLIC_KEY
+  PATH_TO_FILES      = var.PATH_TO_FILES
+  public_ip          = module.project-host.public_ip
 }

@@ -2,6 +2,8 @@ data "aws_subnet" "current_subnet" {
   id = var.subnet_id
 }
 
+
+#EC2 Instance
 resource "aws_instance" "ec2_instance" {
   ami           = var.ami
   instance_type = var.instance_type
@@ -17,25 +19,6 @@ resource "aws_instance" "ec2_instance" {
 
   tags = { Name = var.instance_name, Project = var.project_name, Type = var.host_type }
 
-  provisioner "file" {
-    source = "${var.PATH_TO_FILES}/updatePacks.sh"
-    destination = "/tmp/updatePacks.sh"
-  }
-  provisioner "remote-exec" {
-    inline = [
-      "chmod +x /tmp/updatePacks.sh",
-      "sudo /tmp/updatePacks.sh"
-    ]
-  }
-
-   # Login to the ec2-user with the aws key.
-  connection {
-    type        = "ssh"
-    user        = "ec2-user"
-    password    = ""
-    private_key = file(var.PATH_TO_PUBLIC_KEY)
-    host        = self.public_ip
-  }
 }
 
 #Route 53 Records
@@ -68,7 +51,3 @@ resource "aws_volume_attachment" "volume_attachments" {
   stop_instance_before_detaching = true
 }
 
-
-resource "null_resource" "run_scripts" {
-
-}

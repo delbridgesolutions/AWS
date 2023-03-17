@@ -33,18 +33,10 @@ variable "ebs_size" {
 variable "availability_zone_names" {
 }
 variable "host_type" {
-  type = string
+  type        = string
   description = "Type of ec2 instance"
   validation {
-    condition = contains(["MongoDB", "OpsManager", "OmBackup"], var.host_type)
+    condition     = contains(["MongoDB", "OpsManager", "OmBackup"], var.host_type)
     error_message = "Valid value is one of the following: MongoDB, OpsManager,OmBackup."
   }
-}
-
-
-variable "PATH_TO_PUBLIC_KEY" {
-
-}
-variable "PATH_TO_FILES" {
-  
 }
