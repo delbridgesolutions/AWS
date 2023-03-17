@@ -1,0 +1,31 @@
+#!/bin/bash
+cat << 'ENDKEY' | sudo tee /etc/mongodb.key
+/onQ7jTxupAqhw2Jly534pQbPyxU7lWBVQxAdrt8bR/XUIBLZ1ZYlyLidNiwXoP5
+wxgiHmxAEvYPbSO/iMjhPHvOh96Ypykx0Y6VqxLLZoebnkImv98hFLibB0jDb/cM
+Kaxy05IS7gCpGtN11lydYR3mlU5zQXcV+GNFbi8W4c/JW84HrpQQXkMy7JfXjMjJ
+4ykLAZY73MobiZxXAKr2lAeF4Xw8n8x37R8D8Ymxwqkiv7WyLB9yBPHFJD53h4Ar
+OdPfWm8WWV7ZzHezrD7Rc/mWo4SLSUfvexb0Gn8EDIRcHQATvrucYeTM5kvsFBRk
+z8Vst+9T/ynZNFeNmhw17iuPA86Kr4sBv00of3k73DYaAjKoo9V9IVX3f+Y6Gv7q
+SqXwTv4M+Th1yfODRrt7DmyohkLbLuz7gN3m6urguqAXyTABqbA3bjtPckXx5dX+
+wQzubMNokHmNBDKZ2VjL+Z+bkJpeSi+XrLBTbkgyQ6KZ1va5wenFfO08EQCuPu+v
+Sgs7+IZAWiT6DbaImLMJuLhPew076gah55RsRRkvwU/heljWClR/TZ1xMqk9Osf7
+etUrbYw+WEX0vVDfhFPHgxkSDpu5nLZYuRsycV8ORRIe77OGThSQvxwcKiHgzz2D
+tLyOkSUCvt/tR/6okm5MPCnMSrFlXBzQSXPW1hcQggSm79njiyHYgDa3Lqvrz/m0
+9O+OgZjy/rpRu2CRA9caPlpUSiekxpliXb3ys4V6JgAtpmPUkZ26qlhidAPZesRD
+UC3rnOFH2RacxaYWoPEZ4viNv+SeiylvpDiLq7Yt4RCZLLP58fMGn/0koU41NuLC
+jaUeLCAeaq6yax1CMxWKZBbG9w6CoAVh7WrvTd8ayF0ZdkkCXQgnA3loKn0rKCrd
+RiNH+WiwG8erKI7nr2galMl5w4RXc9/EgywdchlEtOv1vJF4+7t923uQBoDH+GTg
+zT7lmP1oCOcMH2oh3On6uUYacLAIbU9WxJcU1xBG5SXWAJOv
+ENDKEY
+
+sudo chmod 400 /etc/mongodb.key
+
+echo "Lets Encrypt Directories"
+sudo mkdir /var/log/letsencrypt
+sudo chown ec2-user:ec2-user /var/log/letsencrypt
+sudo mkdir /etc/letsencrypt
+sudo chown ec2-user:ec2-user /etc/letsencrypt
+sudo mkdir /var/lib/letsencrypt
+sudo chown ec2-user:ec2-user /var/lib/letsencrypt
+
+sudo /usr/sbin/shutdown -r 1

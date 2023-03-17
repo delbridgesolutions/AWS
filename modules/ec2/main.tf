@@ -44,7 +44,6 @@ resource "aws_ebs_volume" "ebs_volumes" {
 
 resource "aws_volume_attachment" "volume_attachments" {
   for_each = { for v in var.intance_volumes[var.host_type] : v.name => v }
-
   device_name                    = each.value.device_name
   instance_id                    = aws_instance.ec2_instance.id
   volume_id                      = aws_ebs_volume.ebs_volumes[each.key].id

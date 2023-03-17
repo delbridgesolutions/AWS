@@ -23,6 +23,7 @@ module "project-host" {
 
 module "exec-scripts" {
   source             = "./modules/exec"
+  host_type               = var.host_type
   PATH_TO_PUBLIC_KEY = var.PATH_TO_PUBLIC_KEY
   PATH_TO_FILES      = var.PATH_TO_FILES
   public_ip          = module.project-host.public_ip
