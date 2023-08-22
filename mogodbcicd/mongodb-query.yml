@@ -1,0 +1,31 @@
+name: Validate and Run MongoDB Script on self hosted EC2
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  validate-and-run-mongodb-script:
+    runs-on: self-hosted
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          cp /path/to/mongodb.pem ~/.ssh/
+          chmod 600 ~/.ssh/mongodb.pem
+
+      - name: Copy MongoDB Script to EC2
+        run: |
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/mongodb.pem mongoscripts/update_mongodb.js ec2-user@your-ec2-instance-ip:/home/ec2-user/
+
+      - name: SSH into EC2 and Run Update MongoDB Script
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/mongodb.pem ec2-user@your-ec2-instance-ip 'mongo /home/ec2-user/update_mongodb.js'
