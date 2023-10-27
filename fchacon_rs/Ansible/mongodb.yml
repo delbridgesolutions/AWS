@@ -1,0 +1,67 @@
+---
+- name: Install MongoDB and configure Replica Set
+  hosts: mongodb_instances
+  vars:
+    mongodb_version: "7.0.2"
+    mongodb_instance_count: 3
+    mongodb_instance_type: "t2.micro"
+  become: yes
+
+  tasks:
+   - name: Upgrade all packages
+     yum:
+      name: '*'
+      state: latest
+
+   - name: install python2-pip
+     yum:
+      name: python2-pip
+      state: present
+
+   - name: Upgrade pip
+     pip: name=pip state=latest
+     tags:
+       - packages
+
+   - name: Install pymongoDB
+     pip:
+      name: pymongo
+      state: latest
+
+   - name: Add MongoRepository
+     yum_repository:
+      name: mongodb-enterprise-7.0.repo
+      description: MongoDB Enterprise Repository
+      baseurl: https://repo.mongodb.com/yum/amazon/2/mongodb-enterprise/7.0/$basearch/
+      gpgkey: https://www.mongodb.org/static/pgp/server-7.0.asc
+
+   - name: Install MongodB
+     yum:
+      name: mongodb-enterprise
+      state: present
+      update_cache: yes
+
+   - name: Copy custom mongod.conf
+     copy:
+      src: mongodb.conf
+      dest: /etc/mongod.conf
+      owner: root
+      group: root
+
+   - name: Start MongoDB
+     service:
+       name: mongod
+       state: started
+       enabled: yes
+
+   - name: Get primaryIP
+     set_fact:
+       primary_ip: "{{ hostvars['mongodb-instance-1']['ansible_ssh_host'] }}"
+
+   - name: Create MongoDB replicaset
+     command:
+      cmd: mongosh --host {{primary_ip}}:27017 --eval "rs.initiate({_id:'delbridge-rs',members:[{_id:0,host:'{{primary_ip}}:27017'},{_id:1,host:'{{hostvars['mongodb-instance-2']['ansible_ssh_host']}}:27017'},{_id:2,host:'{{hostvars['mongodb-instance-3']['ansible_ssh_host']}}:27017'}]})"
+
+   - name: Verify MongoDB replicaset health
+     command:
+      cmd: mongosh --host localhost:27017 --eval "rs.status()"
